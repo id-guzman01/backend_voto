@@ -34,7 +34,7 @@ const login = async(request, response) => {
         if(result){
             if(bcrypt.compareSync(password,result[0].password)){
                 const data = {
-                    id: result[0].usuario
+                    usuario: result[0].usuario
                 };
                 const payload = {
                     check:true
