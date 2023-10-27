@@ -1,9 +1,9 @@
 import {Router} from "express";
-import { method as votosController } from "../controller/votos.controller";
+import { method as mesasController } from "../controller/mesas.controller";
 import authMiddleware from '../middleware/auth.middleware';
 
 const router = Router();
 
-router.post("/",votosController.insertAvance);
+router.get("/:id",mesasController.select);
 
 export default router;

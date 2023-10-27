@@ -1,9 +1,9 @@
 import {Router} from "express";
-import { method as votosController } from "../controller/votos.controller";
+import { method as sitioController } from "../controller/sitio.controller";
 import authMiddleware from '../middleware/auth.middleware';
 
 const router = Router();
 
-router.post("/",votosController.insertAvance);
+router.get("/",sitioController.select);
 
 export default router;
