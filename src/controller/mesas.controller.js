@@ -5,7 +5,7 @@ const select = async(request, response) => {
     try {
         const {id} = request.params;
         const connection = await getConnection();
-        let list = await connection.query("SELECT mesas.id, mesas.mesa FROM ciudad, mesas, ciudad_has_mesa where ciudad.id = ciudad_has_mesa.ciudad_id and ciudad_has_mesa.mesa_id = mesas.id and ciudad.id = ?",[id]);
+        let list = await connection.query("SELECT mesas.id, mesas.mesa, ciudad_has_mesa.id as cime_id FROM ciudad, mesas, ciudad_has_mesa where ciudad.id = ciudad_has_mesa.ciudad_id and ciudad_has_mesa.mesa_id = mesas.id and ciudad.id = ?",[id]);
         response.json({
             status: 200,
             list: list
