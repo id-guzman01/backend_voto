@@ -33,7 +33,33 @@ const selectOneMesa = async(request, response) => {
 const selectSumatoriaAllMesas = async(request, response) => {
     try {
         const connection = await getConnection();
-        let list = await connection.query("SELECT ciudad.municipio ,sum(votantes) as 'sumatoria votantes', SUM(votos_alcalde) as 'sumatoria votos por alcalde' FROM ciudad, mesas, ciudad_has_mesa, cantidad where ciudad.id = ciudad_has_mesa.ciudad_id and ciudad_has_mesa.mesa_id = mesas.id and ciudad_has_mesa.id = cantidad.cime_id group by ciudad.municipio");
+        let list = await connection.query("SELECT ciudad.municipio ,sum(votantes) as 'sumatoria_votantes', SUM(votos_alcalde) as 'sumatoria_votos_por_alcalde' FROM ciudad, mesas, ciudad_has_mesa, cantidad where ciudad.id = ciudad_has_mesa.ciudad_id and ciudad_has_mesa.mesa_id = mesas.id and ciudad_has_mesa.id = cantidad.cime_id group by ciudad.municipio");
+        response.json({
+            status: 200,
+            list: list
+        });
+    } catch (error) {
+        ExceptionError.errors(response,error);
+    }
+}
+
+const selectTotal = async(request, response) => {
+    try {
+        const connection = await getConnection();
+        let list = await connection.query("SELECT sum(votantes) as 'sumatoria_votantes', SUM(votos_alcalde) as 'sumatoria_votos_por_alcalde' FROM ciudad, mesas, ciudad_has_mesa, cantidad where ciudad.id = ciudad_has_mesa.ciudad_id and ciudad_has_mesa.mesa_id = mesas.id and ciudad_has_mesa.id = cantidad.cime_id");
+        response.json({
+            status: 200,
+            list: list
+        });
+    } catch (error) {
+        ExceptionError.errors(response,error);
+    }
+}
+
+const selectGrafica = async(request, response) => {
+    try {
+        const connection = await getConnection();
+        let list = await connection.query("SELECT ciudad.municipio, SUM(votantes) AS sumatoria_votantes, SUM(votos_alcalde) AS sumatoria_votos_por_alcalde, EXTRACT(HOUR FROM cantidad.hora) AS hora FROM ciudad JOIN ciudad_has_mesa ON ciudad.id = ciudad_has_mesa.ciudad_id JOIN mesas ON ciudad_has_mesa.mesa_id = mesas.id JOIN cantidad ON ciudad_has_mesa.id = cantidad.cime_id GROUP BY ciudad.municipio, EXTRACT(HOUR FROM cantidad.hora)");
         response.json({
             status: 200,
             list: list
@@ -48,4 +74,6 @@ export const method = {
     insertAvance,
     selectOneMesa,
     selectSumatoriaAllMesas,
+    selectTotal,
+    selectGrafica
 }
