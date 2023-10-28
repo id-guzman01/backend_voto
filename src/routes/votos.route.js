@@ -7,6 +7,5 @@ const router = Router();
 router.post("/insert",votosController.insertAvance);
 router.get("/selectTotalOneMesa/:id",votosController.selectOneMesa);
 router.get("/selectSumatoriaAllMesas",votosController.selectSumatoriaAllMesas);
-router.get("/selectAllRegistrosPorMesa/:id",votosController.selectAllRegistrosPorMesa);
 
 export default router;
