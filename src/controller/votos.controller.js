@@ -8,7 +8,7 @@ const insertAvance = async(request, response) => {
         await connection.query("insert into cantidad (cime_id, votantes, votos_alcalde, registradopor, hora)values (?,?,?,?,DATE_FORMAT(CURRENT_TIME(), '%h:%i %p'))",[cime_id, votantes, votos_alcalde, registradopor]);
         response.json({
             status: 200,
-            message: "registro nuevo exitoso"
+            message: "Nuevo registro exitoso"
         });
     } catch (error) {
         ExceptionError.errors(response,error);
