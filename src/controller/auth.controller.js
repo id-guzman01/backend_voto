@@ -11,7 +11,8 @@ const login = (request, response) => {
     try {
         const {usuario, password} = request.body;
         conexion.query('select * from usuarios where usuario = ?',[usuario], function (err, result, fields) {
-            if(bcrypt.compareSync(password,result[0].password)){
+            let pass = result[0].password;
+            if(bcrypt.compareSync(password,pass)){
                 const data = {
                     usuario: result[0].usuario
                 };
