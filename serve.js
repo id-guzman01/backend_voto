@@ -4,10 +4,10 @@ import cors from "cors";
 import bodyParser from "body-parser";
 
 //Import routes
-import votosRoute from './routes/votos.route';
-import authRoutes from './routes/auth.route';
-import sitioRoutes from './routes/sitio.router';
-import mesaRoutes from './routes/mesas.route';
+import votosRoute from './src/routes/votos.route';
+import authRoutes from './src/routes/auth.route';
+import sitioRoutes from './src/routes/sitio.router';
+import mesaRoutes from './src/routes/mesas.route';
 
 const app = express();
 
@@ -26,4 +26,6 @@ app.use("/api/v1/auth",authRoutes);
 app.use("/api/v1/sitio",sitioRoutes);
 app.use("/api/v1/mesas",mesaRoutes);
 
-export default app;
+app.listen(3000, ()=>{ 
+    console.log('Active web service on the port', 3000);
+});
