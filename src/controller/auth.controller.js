@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import config from "../config";
 import jwt from "jsonwebtoken";
 
-const createUser = async (req, res) => {
+const createUser = (req, res) => {
 }
 
 const login = (request, response) => {

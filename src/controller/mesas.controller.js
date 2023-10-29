@@ -1,14 +1,15 @@
-import {getConnection} from '../database/conexion.database';
+const conexion = require('../database/conexion.database');
 import  ExceptionError  from '../exception/exception.hableError';
 
-const select = async(request, response) => {
+const select = (request, response) => {
     try {
         const {id} = request.params;
-        const connection = await getConnection();
-        let list = await connection.query("SELECT mesas.id, mesas.mesa, ciudad_has_mesa.id as cime_id FROM ciudad, mesas, ciudad_has_mesa where ciudad.id = ciudad_has_mesa.ciudad_id and ciudad_has_mesa.mesa_id = mesas.id and ciudad.id = ?",[id]);
-        response.json({
-            status: 200,
-            list: list
+        conexion.query("SELECT mesas.id, mesas.mesa, ciudad_has_mesa.id as cime_id FROM ciudad, mesas, ciudad_has_mesa where ciudad.id = ciudad_has_mesa.ciudad_id and ciudad_has_mesa.mesa_id = mesas.id and ciudad.id = ?",[id], function (err, result, fields) {
+            let list = result;
+            response.json({
+                status: 200,
+                list: list
+            });
         });
     } catch (error) {
         ExceptionError.errors(response,error);
