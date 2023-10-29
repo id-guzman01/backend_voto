@@ -1,14 +1,13 @@
-const conexion = require('../database/conexion.database');
+import {getConnection} from '../database/conexion.database';
 import  ExceptionError  from '../exception/exception.hableError';
 
-const select = (request, response) => {
+const select = async(request, response) => {
     try {
-        conexion.query("select * from ciudad", function (err, result, fields) {
-            let list = result;
-            response.json({
-                status: 200,
-                list: list
-            });
+        const connection = await getConnection();
+        let list = await connection.query("select * from ciudad");
+        response.json({
+            status: 200,
+            list: list
         });
     } catch (error) {
         ExceptionError.errors(response,error);

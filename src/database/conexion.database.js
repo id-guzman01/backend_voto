@@ -1,13 +1,18 @@
-var mysql = require('mysql');
+import mysql from "promise-mysql";
+import config from "../config"
 
-var config = {
-    host: 'localhost',
-    database: 'votaciones',
-    user: 'root',
-    password: '1234',
-    port: '3306'
-};
+const connection = mysql.createConnection({
+    host: config.host,
+    database: config.database,
+    user: config.user,
+    password: config.password,
+    port: 3306
+});
 
-const conexion = new mysql.createConnection(config);
+const getConnection = () => {
+    return connection;
+}
 
-module.exports = conexion;
+module.exports = {
+    getConnection
+}
