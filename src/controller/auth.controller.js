@@ -29,10 +29,16 @@ const createUser = async (req, res) => {
 const login = async(request, response) => {
     try {
         const {usuario, password} = request.body;
+<<<<<<< HEAD
         const connection = await getConnection();
         const result = await connection.query("select * from usuarios where usuario = ?",usuario);
         if(result){
             if(bcrypt.compareSync(password,result[0].password)){
+=======
+        conexion.query('select * from usuarios where usuario = ?',[usuario], function (err, result, fields) {
+            let pass = result[0].password;
+            if(bcrypt.compareSync(password,pass)){
+>>>>>>> e11928dc5c8031dddf2b47b21cbd74f8068cea45
                 const data = {
                     usuario: result[0].usuario
                 };
